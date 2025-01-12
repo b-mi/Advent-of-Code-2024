@@ -1,7 +1,10 @@
 import numpy as np
+from colorama import Fore, Style, init
+
+
 
 # from MatrixRenderer import MatrixRenderer
-from PyQt5Renderer import MatrixRenderer
+# from PyQt5Renderer import MatrixRenderer
 
 def get_lines(file_name):
     with open(f'data\{file_name}.txt', "r") as file:
@@ -69,20 +72,31 @@ def get_rows_as_ints(file_name):
         arrs.append(arow)
     return arrs
 
-def get_renderer(matrix, colors, cell_size=20, caption=None, window_size=None, font_size=20):
-    r = MatrixRenderer(matrix, cell_size=cell_size, colors=colors, window_size=window_size, font_size=font_size)
-    renderer_update(r, matrix, caption=caption)
-    return r
+# def print_numpy_2d_array(matrix, colors):
+#     for row in matrix:
+#         print("".join(row))    
 
-def renderer_update(renderer, matrix, caption=None, wait_for_keypress=None):
-    renderer.update_matrix(matrix)
-    if caption:
-        renderer.set_caption(caption)
-    renderer.render()
-
-def renderer_do_events(renderer):
-    renderer.do_events()
-        
+color_map = {
+    'r': Fore.LIGHTRED_EX,
+    'g': Fore.LIGHTGREEN_EX,
+    'b': Fore.LIGHTBLUE_EX,
+    'y': Fore.YELLOW,
+}
+def print_numpy_2d_array(matrix, title, colors):
     
-def render_matrix(matrix, colors, caption=None, cell_size=20, window_size=None, font_size=10):
-    renderer = get_renderer(matrix, colors, cell_size=cell_size, caption=caption, font_size=font_size, window_size=window_size)
+    print()
+    print('---')
+    print(title)
+    print('---')
+    # Create a set of positions and their corresponding colors
+    color_positions = {(row, col): color_map[color] for row, col, color in colors}
+    
+    for row_index, row in enumerate(matrix):
+        colored_row = []
+        for col_index, char in enumerate(row):
+            # Apply color if the position is in the color_positions dictionary
+            if (row_index, col_index) in color_positions:
+                colored_row.append(color_positions[(row_index, col_index)] + char + Style.RESET_ALL)
+            else:
+                colored_row.append(char)
+        print("".join(colored_row))

@@ -1,6 +1,5 @@
 import tools
 import numpy as np
-import MatrixRenderer
 
 dirs = {
     '<': (0, -1),
@@ -59,21 +58,15 @@ if __name__ == "__main__":
     command_lines = [line for line in lines if line and not line.startswith('#')]
 
     if use_renderer:
-        renderer = MatrixRenderer.MatrixRenderer(matrix, cell_size=30, fps=20)  # 2 snímky za sekundu
+        pass
 
     # <^^>>>vv<v>>v<<
     for commands in command_lines:
         for command in commands:
-            if use_renderer:
-                renderer.do_events()
             ry, rx = execute(matrix, command, ry, rx)
     
             if use_renderer:        
-                renderer.update_matrix(matrix)
-                renderer.set_caption(command)
-                renderer.render()
-                renderer.tick()  # 
-                renderer.do_events()
+                pass
             pass
     
     for y in range(height):
@@ -82,7 +75,5 @@ if __name__ == "__main__":
                 result += y * 100 + x
     
     if use_renderer:        
-        renderer.set_caption(str(result))
-        renderer.wait_for_keypress()
-        renderer.close()
+        pass
     print(result)
