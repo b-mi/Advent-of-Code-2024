@@ -82,21 +82,29 @@ color_map = {
     'b': Fore.LIGHTBLUE_EX,
     'y': Fore.YELLOW,
 }
-def print_numpy_2d_array(matrix, title, colors):
+
     
+def print_numpy_2d_array(matrix, title, colors):
     print()
     print('---')
     print(title)
     print('---')
-    # Create a set of positions and their corresponding colors
+
+    # Vytvoriť mapovanie farieb
     color_positions = {(row, col): color_map[color] for row, col, color in colors}
-    
+
+    # Tlač hlavičky s indexami stĺpcov
+    num_cols = len(matrix[0])
+    col_indices = "  " + "".join(str(i % 10) for i in range(num_cols))
+    print(col_indices)
+
     for row_index, row in enumerate(matrix):
+        # Vytvoriť riadok s indexom riadku zľava
+        row_str = str(row_index % 10) + " "  # Index riadku modulo 10
         colored_row = []
         for col_index, char in enumerate(row):
-            # Apply color if the position is in the color_positions dictionary
             if (row_index, col_index) in color_positions:
                 colored_row.append(color_positions[(row_index, col_index)] + char + Style.RESET_ALL)
             else:
                 colored_row.append(char)
-        print("".join(colored_row))
+        print(row_str + "".join(colored_row))
